@@ -1,0 +1,1 @@
+ALTER TABLE endereco ADD cliente_id TEXT NOT NULL;

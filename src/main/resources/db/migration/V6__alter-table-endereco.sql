@@ -1,0 +1,1 @@
+ALTER TABLE endereco DROP COLUMN cliente_id;
