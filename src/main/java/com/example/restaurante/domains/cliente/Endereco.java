@@ -30,9 +30,6 @@ public class Endereco {
 
     private String complemento;
 
-    @OneToOne(mappedBy = "endereco")
-    private Cliente cliente;
-
     public Endereco(RequestEnderecoDTO requestEnderecoDTO){
         this.cep = requestEnderecoDTO.cep();
         this.estado = requestEnderecoDTO.estado();
