@@ -9,7 +9,7 @@ public record RequestProdutoDTO(
         @NotNull
         String nome,
         String descricao,
-        String categoria,
+        String categoria_id,
         @NotNull
         Integer preco_em_centavos
 ) { }

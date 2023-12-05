@@ -1,5 +1,6 @@
 package com.example.restaurante.domains.cliente;
 
+import com.example.restaurante.domains.Endereco.RequestEnderecoDTO;
 import jakarta.validation.constraints.NotNull;
 
 public record RequestClienteDTO(

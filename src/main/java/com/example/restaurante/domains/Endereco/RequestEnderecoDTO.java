@@ -1,4 +1,4 @@
-package com.example.restaurante.domains.cliente;
+package com.example.restaurante.domains.Endereco;
 
 import jakarta.validation.constraints.NotNull;
 
