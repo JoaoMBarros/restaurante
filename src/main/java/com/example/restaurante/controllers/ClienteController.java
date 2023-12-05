@@ -1,5 +1,6 @@
 package com.example.restaurante.controllers;
 
+import com.example.restaurante.domains.Endereco.Endereco;
 import com.example.restaurante.domains.cliente.*;
 import jakarta.transaction.Transactional;
 import jakarta.validation.Valid;
