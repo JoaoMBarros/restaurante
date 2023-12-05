@@ -2,6 +2,8 @@
 
 package com.example.restaurante.domains.produto;
 
+import com.example.restaurante.domains.Categoria.Categoria;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -22,15 +24,16 @@ public class Produto {
 
     private String descricao;
 
-    private String categoria;
-
     private Integer preco_em_centavos;
 
     private Boolean ativo;
 
+    @ManyToOne(optional = false)
+    @JoinColumn(name="categoria_id", nullable = false)
+    private Categoria categoria;
+
     public Produto(RequestProdutoDTO requestProdutoDTO){
         this.nome = requestProdutoDTO.nome();
-        this.categoria = requestProdutoDTO.categoria();
         this.descricao = requestProdutoDTO.descricao();
         this.preco_em_centavos = requestProdutoDTO.preco_em_centavos();
         this.ativo = true;
