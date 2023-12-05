@@ -1,4 +1,4 @@
-package com.example.restaurante.domains.cliente;
+package com.example.restaurante.domains.Endereco;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 
