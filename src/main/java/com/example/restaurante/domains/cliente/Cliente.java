@@ -1,5 +1,6 @@
 package com.example.restaurante.domains.cliente;
 
+import com.example.restaurante.domains.Endereco.Endereco;
 import jakarta.persistence.*;
 import lombok.*;
 
