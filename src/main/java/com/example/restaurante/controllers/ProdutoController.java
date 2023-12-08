@@ -25,22 +25,21 @@ public class ProdutoController {
 
     @GetMapping
     public ResponseEntity getAllProdutos(){
-        var allProdutos = produtoRepository.findAllByAtivoTrue();
+        try {
+            var allProdutos = produtoRepository.findAllByAtivoTrue();
 
-        return ResponseEntity.ok(allProdutos);
+            return ResponseEntity.ok(allProdutos);
+        } catch (Exception e){
+            e.printStackTrace();
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
     @GetMapping("/{id}")
     public ResponseEntity getProduto(@PathVariable String id){
-        Optional<Produto> optionalProduto = produtoRepository.findById(id);
-
-        if (optionalProduto.isPresent()) {
-            Produto produto = optionalProduto.get();
-
-            return ResponseEntity.ok(produto);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return produtoRepository.findById(id)
+                .map(ResponseEntity::ok)
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @PostMapping
@@ -58,32 +57,24 @@ public class ProdutoController {
     @PutMapping
     @Transactional
     public ResponseEntity updateProduto(@RequestBody @Valid RequestProdutoDTO data){
-        Optional<Produto> optionalProduto = produtoRepository.findById(data.id());
-
-        if (optionalProduto.isPresent()) {
-            Produto produto = optionalProduto.get();
-            produto.setNome(data.nome());
-            produto.setDescricao(data.descricao());
-            produto.setPreco_em_centavos(data.preco_em_centavos());
-
-            return ResponseEntity.ok(produto);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return produtoRepository.findById(data.id())
+                .map(produto -> {
+                    produto.setNome(data.nome());
+                    produto.setDescricao(data.descricao());
+                    produto.setPreco_em_centavos(data.preco_em_centavos());
+                    return ResponseEntity.ok(produto);
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 
     @DeleteMapping
     @Transactional
     public ResponseEntity deleteProduto(@RequestBody @Valid RequestProdutoDTO data){
-        Optional<Produto> optionalProduto = produtoRepository.findById(data.id());
-
-        if(optionalProduto.isPresent()) {
-            Produto produto = optionalProduto.get();
-            produto.setAtivo(false);
-
-            return ResponseEntity.noContent().build();
-        } else {
-            return ResponseEntity.notFound().build();
-        }
+        return produtoRepository.findById(data.id())
+                .map(produto -> {
+                    produto.setAtivo(false);
+                    return ResponseEntity.noContent().build();
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 }

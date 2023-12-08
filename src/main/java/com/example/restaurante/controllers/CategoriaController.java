@@ -24,24 +24,48 @@ public class CategoriaController {
     private ProdutoRepository produtoRepository;
 
     @GetMapping
-    public ResponseEntity getCategorias(){
-        List<Categoria> categoriaList = categoriaRepository.findAll();
+    public ResponseEntity getCategorias() {
+        try {
+            List<Categoria> categoriaList = categoriaRepository.findAll();
 
-        return ResponseEntity.ok(categoriaList);
+            return ResponseEntity.ok(categoriaList);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return ResponseEntity.internalServerError().build();
+        }
     }
 
-    @GetMapping("/{id}/produtos")
-    public ResponseEntity getCategoriaProdutos(@PathVariable String id){
-        List<Produto> produtoList = produtoRepository.findAllByCategoriaId(id);
 
-        return ResponseEntity.ok(produtoList);
+    @GetMapping("/{id}/produtos")
+    public ResponseEntity getCategoriaProdutos(@PathVariable String id) {
+        try {
+            List<Produto> produtoList = produtoRepository.findAllByCategoriaId(id);
+
+            if (produtoList.isEmpty()) {
+                return ResponseEntity.notFound().build();
+            }
+
+            return ResponseEntity.ok(produtoList);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return ResponseEntity.internalServerError().build();
+        }
     }
     @PostMapping
     @Transactional
-    public ResponseEntity recordCategoria(@RequestBody @Valid RequestCategoriaDTO requestCategoriaDTO){
-        Categoria categoria = new Categoria(requestCategoriaDTO);
-        categoriaRepository.save(categoria);
+    public ResponseEntity recordCategoria(@RequestBody @Valid RequestCategoriaDTO requestCategoriaDTO) {
+        try {
+            Categoria categoria = new Categoria(requestCategoriaDTO);
+            categoriaRepository.save(categoria);
 
-        return ResponseEntity.ok(categoria);
+            return ResponseEntity.ok(categoria);
+        } catch (Exception e) {
+            e.printStackTrace();
+
+            return ResponseEntity.internalServerError().build();
+        }
     }
+
 }
